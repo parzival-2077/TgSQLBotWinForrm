@@ -5,43 +5,57 @@ using Telegram.Bot.Types;
 
 namespace TestSQLBot
 {
+
     public partial class Form1 : Form
     {
         private static string Token { get; set; } = "5864093331:AAEUBNuFIRlNaXEMlT1AuObkKX7rS2qBzM4"; //токен
         private static TelegramBotClient client;
         private static string connectionString = "Server=(localdb)\\mssqllocaldb;Database=tgServer;Trusted_Connection=True;"; //БД
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
-        public int collumCount = 0;
+        private int collumCount = 0;
         private static string nc;
-        private bool button1Pressed;
+
 
         public Form1()
         {
             InitializeComponent();
+            button2.Visible= false;
 
         }
         private void button1_Click(object sender, EventArgs e)
         {
             //button1Pressed = true;
-
-             client = new TelegramBotClient(Token);
-             client.StartReceiving();
-             client.OnMessage += OnMassegeHandler;
-             //Console.ReadLine();
-             //client.StopReceiving();
-
-
-
+            button2.Visible = true;
+            MessageBox.Show("Start bot");
+            client = new TelegramBotClient(Token);
+            client.StartReceiving();
+            client.OnMessage += OnMassegeHandler;
         }
-        private static async void OnMassegeHandler(object? sender, MessageEventArgs e)
+
+
+        private void button2_Click(object sender, EventArgs e)
         {
-            int collumCount = 0;
+            button2.Visible = false;
+            MessageBox.Show("Stop bot");
+            client.StopReceiving();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            collumCount = Convert.ToInt32(numericUpDown1.Value);
+        }
+
+        private async void OnMassegeHandler(object? sender, MessageEventArgs e)
+        {
+
+            //  int collumCount = 0;
             string commMessage = "";
             var msg = e.Message;
+            collumCount = Convert.ToInt32(numericUpDown1.Value);
 
             if (msg.Text != null)
             {
-               // Console.WriteLine($"new massage {msg.Text}");
+                // Console.WriteLine($"new massage {msg.Text}");
             }
 
             if (msg.Text == "/start")
@@ -76,7 +90,7 @@ namespace TestSQLBot
                                 SqlCommand command = new SqlCommand(sqlExpression, connection);
                                 int number = await command.ExecuteNonQueryAsync();
                                 //Console.WriteLine($"Добавлено объектов: {number}");
-                                collumCount++;
+                                //collumCount++;
                             }
                         }
                         else if (collumCount <= 4)
@@ -94,7 +108,7 @@ namespace TestSQLBot
                                 SqlCommand command = new SqlCommand(sqlExpression, connection);
                                 int number = await command.ExecuteNonQueryAsync();
                                 //Console.WriteLine($"Добавлено ответов  объектов: {number}");
-                                collumCount++;
+                                //collumCount++;
                             }
                         }
                     }
@@ -129,14 +143,7 @@ namespace TestSQLBot
                 }
             }
         }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            client.StopReceiving();
-        }
-
-
     }
 
-    
+
 }
