@@ -19,7 +19,7 @@ namespace TestSQLBot
         public Form1()
         {
             InitializeComponent();
-            button2.Visible= false;
+            button2.Visible = false;
 
         }
         private void button1_Click(object sender, EventArgs e)
@@ -92,9 +92,13 @@ namespace TestSQLBot
                                 //Console.WriteLine($"Добавлено объектов: {number}");
                                 //collumCount++;
                             }
+
+
                         }
+
                         else if (collumCount <= 4)
                         {
+                            //msg = await client.SendTextMessageAsync(msg.Chat.Id, $"Напишите ответ на вопрос #{collumCount}:");
                             string s = $"q{collumCount}";
                             string nextMessage = nextMsg.Text;
                             msg = await client.SendTextMessageAsync(msg.Chat.Id, "OK");
@@ -110,6 +114,7 @@ namespace TestSQLBot
                                 //Console.WriteLine($"Добавлено ответов  объектов: {number}");
                                 //collumCount++;
                             }
+
                         }
                     }
 
