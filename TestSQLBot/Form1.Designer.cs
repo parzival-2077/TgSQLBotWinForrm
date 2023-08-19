@@ -34,11 +34,15 @@
             label1 = new Label();
             label2 = new Label();
             panel1 = new Panel();
+            button5 = new Button();
+            button4 = new Button();
             panel2 = new Panel();
-            vScrollBar1 = new VScrollBar();
+            label5 = new Label();
+            label4 = new Label();
+            button3 = new Button();
             listBox1 = new ListBox();
             label3 = new Label();
-            button3 = new Button();
+            openFileDialog1 = new OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -109,6 +113,8 @@
             // 
             panel1.BackColor = Color.Silver;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(button5);
+            panel1.Controls.Add(button4);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(button2);
@@ -119,33 +125,80 @@
             panel1.Size = new Size(321, 426);
             panel1.TabIndex = 5;
             // 
+            // button5
+            // 
+            button5.Location = new Point(35, 187);
+            button5.Name = "button5";
+            button5.Size = new Size(75, 23);
+            button5.TabIndex = 6;
+            button5.Text = "button5";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
+            // button4
+            // 
+            button4.BackColor = Color.LimeGreen;
+            button4.Location = new Point(3, 396);
+            button4.Name = "button4";
+            button4.Size = new Size(25, 25);
+            button4.TabIndex = 5;
+            button4.UseVisualStyleBackColor = false;
+            // 
             // panel2
             // 
             panel2.BackColor = Color.Silver;
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(label5);
+            panel2.Controls.Add(label4);
             panel2.Controls.Add(button3);
-            panel2.Controls.Add(vScrollBar1);
             panel2.Controls.Add(listBox1);
             panel2.Controls.Add(label3);
             panel2.Location = new Point(381, 12);
             panel2.Name = "panel2";
             panel2.Size = new Size(321, 426);
             panel2.TabIndex = 6;
+            panel2.Paint += panel2_Paint;
             // 
-            // vScrollBar1
+            // label5
             // 
-            vScrollBar1.Location = new Point(285, 81);
-            vScrollBar1.Name = "vScrollBar1";
-            vScrollBar1.Size = new Size(17, 139);
-            vScrollBar1.TabIndex = 7;
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
+            label5.Location = new Point(21, 232);
+            label5.Name = "label5";
+            label5.Size = new Size(213, 25);
+            label5.TabIndex = 10;
+            label5.Text = "Количество вопросов:";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Location = new Point(240, 232);
+            label4.Name = "label4";
+            label4.Size = new Size(22, 25);
+            label4.TabIndex = 9;
+            label4.Text = "0";
+            // 
+            // button3
+            // 
+            button3.Cursor = Cursors.Hand;
+            button3.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            button3.Location = new Point(21, 271);
+            button3.Name = "button3";
+            button3.Size = new Size(281, 35);
+            button3.TabIndex = 8;
+            button3.Text = "ДОБАВИТЬ ФАЙЛ ВОПРОСОВ";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // listBox1
             // 
+            listBox1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(20, 81);
+            listBox1.ItemHeight = 25;
+            listBox1.Location = new Point(21, 81);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(262, 139);
+            listBox1.Size = new Size(281, 129);
             listBox1.TabIndex = 6;
             // 
             // label3
@@ -160,15 +213,9 @@
             label3.Text = "Настройка вопросов";
             label3.UseMnemonic = false;
             // 
-            // button3
+            // openFileDialog1
             // 
-            button3.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            button3.Location = new Point(21, 238);
-            button3.Name = "button3";
-            button3.Size = new Size(281, 35);
-            button3.TabIndex = 8;
-            button3.Text = "ДОБАВИТЬ ФАЙЛ ВОПРОСОВ";
-            button3.UseVisualStyleBackColor = true;
+            openFileDialog1.FileName = "openFileDialog1";
             // 
             // Form1
             // 
@@ -197,8 +244,12 @@
         private Panel panel1;
         private Panel panel2;
         private Label label3;
-        private VScrollBar vScrollBar1;
         private ListBox listBox1;
         private Button button3;
+        private OpenFileDialog openFileDialog1;
+        private Label label4;
+        private Label label5;
+        private Button button4;
+        private Button button5;
     }
 }

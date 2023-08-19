@@ -20,23 +20,27 @@ namespace TestSQLBot
         {
             InitializeComponent();
             button2.Visible = false;
+            openFileDialog1.Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
+            button4.BackColor = Color.Red;
 
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            //button1Pressed = true;
+
             button2.Visible = true;
             MessageBox.Show("Start bot");
+            button4.BackColor = Color.LimeGreen;
             client = new TelegramBotClient(Token);
             client.StartReceiving();
             client.OnMessage += OnMassegeHandler;
-        }
 
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
             button2.Visible = false;
             MessageBox.Show("Stop bot");
+            button4.BackColor = Color.Red;
             client.StopReceiving();
         }
 
@@ -47,16 +51,11 @@ namespace TestSQLBot
 
         private async void OnMassegeHandler(object? sender, MessageEventArgs e)
         {
-
-            //  int collumCount = 0;
             string commMessage = "";
             var msg = e.Message;
             collumCount = Convert.ToInt32(numericUpDown1.Value);
 
-            if (msg.Text != null)
-            {
-                // Console.WriteLine($"new massage {msg.Text}");
-            }
+            if (msg.Text != null) { }
 
             if (msg.Text == "/start")
             {
@@ -93,37 +92,29 @@ namespace TestSQLBot
                                 //collumCount++;
                             }
 
-
                         }
-
                         else if (collumCount <= 4)
                         {
-                            //msg = await client.SendTextMessageAsync(msg.Chat.Id, $"Напишите ответ на вопрос #{collumCount}:");
                             string s = $"q{collumCount}";
                             string nextMessage = nextMsg.Text;
                             msg = await client.SendTextMessageAsync(msg.Chat.Id, "OK");
                             string sqlExpression = $"UPDATE  Users SET {s} = N'{nextMessage}' WHERE Name = N'{commMessage}'";
-                            // string sqlExpression = $"INSERT INTO Users ({s}) VALUES (N'{nextMessage}' WHERE Name = N'{commMessage}')";
                             using (SqlConnection connection = new SqlConnection(connectionString))
                             {
                                 await connection.OpenAsync();
-
                                 // добавление
                                 SqlCommand command = new SqlCommand(sqlExpression, connection);
                                 int number = await command.ExecuteNonQueryAsync();
                                 //Console.WriteLine($"Добавлено ответов  объектов: {number}");
                                 //collumCount++;
                             }
-
                         }
                     }
-
                 };
             }
 
             else if (msg.Text == "/admin")
             {
-                //string connectionString = "ваша строка подключения";
                 string query = "SELECT * FROM Users"; // ваш SQL-запрос
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -148,7 +139,39 @@ namespace TestSQLBot
                 }
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            // получаем выбранный файл
+            string filename = openFileDialog1.FileName;
+            listBox1.Items.Clear();
+            using (System.IO.StreamReader sr = new System.IO.StreamReader(filename))
+            {
+                while (!sr.EndOfStream)
+                {
+                    listBox1.Items.Add(sr.ReadLine());
+                }
+            }
+            label4.Text = listBox1.Items.Count.ToString();
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            //client.StartReceiving();
+            client.OnMessage += OnMassegeHandler1;
+        }
+        private async void OnMassegeHandler1(object? sender, MessageEventArgs e)
+        {
+            var msg1 = e.Message;
+            msg1 = await client.SendTextMessageAsync(msg1.Chat.Id, $"Напишите ответ на вопрос #{collumCount}:");
+        }
+
     }
-
-
 }
