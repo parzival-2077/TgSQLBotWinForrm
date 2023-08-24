@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             button1 = new Button();
             button2 = new Button();
             numericUpDown1 = new NumericUpDown();
             label1 = new Label();
             label2 = new Label();
             panel1 = new Panel();
-            button5 = new Button();
             button4 = new Button();
             panel2 = new Panel();
             label5 = new Label();
@@ -113,7 +113,6 @@
             // 
             panel1.BackColor = Color.Silver;
             panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(button5);
             panel1.Controls.Add(button4);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(label2);
@@ -125,16 +124,6 @@
             panel1.Size = new Size(321, 426);
             panel1.TabIndex = 5;
             // 
-            // button5
-            // 
-            button5.Location = new Point(35, 187);
-            button5.Name = "button5";
-            button5.Size = new Size(75, 23);
-            button5.TabIndex = 6;
-            button5.Text = "button5";
-            button5.UseVisualStyleBackColor = true;
-            button5.Click += button5_Click;
-            // 
             // button4
             // 
             button4.BackColor = Color.LimeGreen;
@@ -143,6 +132,7 @@
             button4.Size = new Size(25, 25);
             button4.TabIndex = 5;
             button4.UseVisualStyleBackColor = false;
+            button4.Click += button4_Click;
             // 
             // panel2
             // 
@@ -224,8 +214,9 @@
             ClientSize = new Size(714, 450);
             Controls.Add(panel2);
             Controls.Add(panel1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
-            Text = "Form1";
+            Text = "Telegram Bot [v0.1]";
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -250,6 +241,5 @@
         private Label label4;
         private Label label5;
         private Button button4;
-        private Button button5;
     }
 }

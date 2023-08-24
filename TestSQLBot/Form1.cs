@@ -2,6 +2,7 @@ using Telegram.Bot;
 using Telegram.Bot.Args;
 using Microsoft.Data.SqlClient;
 using Telegram.Bot.Types;
+using System.Threading;
 
 namespace TestSQLBot
 {
@@ -14,6 +15,7 @@ namespace TestSQLBot
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
         private int collumCount = 0;
         private static string nc;
+        public int create = 0;
 
 
         public Form1()
@@ -162,16 +164,18 @@ namespace TestSQLBot
 
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
-            //client.StartReceiving();
-            client.OnMessage += OnMassegeHandler1;
+            create++;
+            if (create == 3)
+            {
+                MessageBox.Show("Автор идеи: Курбатов parzival_2077 Алексей \n" +
+                                "Альфа тестировщики: Катаев Иван, Светлова Ирина, Бойправ Вадим \n" +
+                                "Идейный душнила: Павлов Андрей\n" +
+                                "Технические консультанты: Шишкина Марина, Мартьянов Максим, Тимонов Алексей\n"+
+                                "Год релиза - 2023", "Пасхалка", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                create = 0;
+            }
         }
-        private async void OnMassegeHandler1(object? sender, MessageEventArgs e)
-        {
-            var msg1 = e.Message;
-            msg1 = await client.SendTextMessageAsync(msg1.Chat.Id, $"Напишите ответ на вопрос #{collumCount}:");
-        }
-
     }
 }
