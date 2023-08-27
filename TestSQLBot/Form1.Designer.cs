@@ -244,7 +244,7 @@
             MaximumSize = new Size(730, 489);
             MinimumSize = new Size(730, 489);
             Name = "Form1";
-            Text = "Telegram Bot [v0.1]";
+            Text = "Telegram Bot [v0.5 beta]";
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
