@@ -37,12 +37,14 @@
             panel1 = new Panel();
             button4 = new Button();
             panel2 = new Panel();
+            button5 = new Button();
+            listBox1 = new ListBox();
+            linkLabel1 = new LinkLabel();
             textBox1 = new TextBox();
             label5 = new Label();
             button3 = new Button();
             label3 = new Label();
             openFileDialog1 = new OpenFileDialog();
-            linkLabel1 = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -138,6 +140,8 @@
             // 
             panel2.BackColor = Color.Silver;
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(button5);
+            panel2.Controls.Add(listBox1);
             panel2.Controls.Add(linkLabel1);
             panel2.Controls.Add(textBox1);
             panel2.Controls.Add(label5);
@@ -148,6 +152,39 @@
             panel2.Size = new Size(321, 426);
             panel2.TabIndex = 6;
             panel2.Paint += panel2_Paint;
+            // 
+            // button5
+            // 
+            button5.AutoSize = true;
+            button5.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            button5.Location = new Point(21, 336);
+            button5.Name = "button5";
+            button5.Size = new Size(280, 35);
+            button5.TabIndex = 14;
+            button5.Text = "СПИСОК КОМАНД";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
+            // listBox1
+            // 
+            listBox1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            listBox1.FormattingEnabled = true;
+            listBox1.ItemHeight = 25;
+            listBox1.Location = new Point(21, 166);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(280, 154);
+            listBox1.TabIndex = 13;
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.Location = new Point(3, 406);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(69, 15);
+            linkLabel1.TabIndex = 12;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "куда жмать";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // textBox1
             // 
@@ -185,27 +222,16 @@
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point);
             label3.ForeColor = Color.Black;
-            label3.Location = new Point(31, 16);
+            label3.Location = new Point(95, 16);
             label3.Name = "label3";
-            label3.Size = new Size(261, 32);
+            label3.Size = new Size(139, 32);
             label3.TabIndex = 5;
-            label3.Text = "Настройка вопросов";
+            label3.Text = "Настройка";
             label3.UseMnemonic = false;
             // 
             // openFileDialog1
             // 
             openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // linkLabel1
-            // 
-            linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(3, 406);
-            linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(69, 15);
-            linkLabel1.TabIndex = 12;
-            linkLabel1.TabStop = true;
-            linkLabel1.Text = "куда жмать";
-            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // Form1
             // 
@@ -215,6 +241,8 @@
             Controls.Add(panel2);
             Controls.Add(panel1);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximumSize = new Size(730, 489);
+            MinimumSize = new Size(730, 489);
             Name = "Form1";
             Text = "Telegram Bot [v0.1]";
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
@@ -241,5 +269,7 @@
         private Button button4;
         private TextBox textBox1;
         private LinkLabel linkLabel1;
+        private Button button5;
+        private ListBox listBox1;
     }
 }

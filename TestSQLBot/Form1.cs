@@ -206,5 +206,30 @@ namespace TestSQLBot
         {
             System.Diagnostics.Process.Start(new ProcessStartInfo { FileName = "https://github.com/parzival-2077/TgSQLBotWinForrm", UseShellExecute = true });
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();
+            string query = "SELECT * FROM Users"; // ваш SQL-запрос
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            // Получение значений полей каждой строки
+                            int id = reader.GetInt32(0);
+                            string name = reader.GetString(1);
+                            listBox1.Items.Add(name + "\n");
+
+                        }
+                    }
+                }
+            }
+        }
     }
 }
