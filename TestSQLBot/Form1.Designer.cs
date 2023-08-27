@@ -37,12 +37,12 @@
             panel1 = new Panel();
             button4 = new Button();
             panel2 = new Panel();
+            textBox1 = new TextBox();
             label5 = new Label();
-            label4 = new Label();
             button3 = new Button();
-            listBox1 = new ListBox();
             label3 = new Label();
             openFileDialog1 = new OpenFileDialog();
+            linkLabel1 = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -138,10 +138,10 @@
             // 
             panel2.BackColor = Color.Silver;
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(linkLabel1);
+            panel2.Controls.Add(textBox1);
             panel2.Controls.Add(label5);
-            panel2.Controls.Add(label4);
             panel2.Controls.Add(button3);
-            panel2.Controls.Add(listBox1);
             panel2.Controls.Add(label3);
             panel2.Location = new Point(381, 12);
             panel2.Name = "panel2";
@@ -149,47 +149,36 @@
             panel2.TabIndex = 6;
             panel2.Paint += panel2_Paint;
             // 
+            // textBox1
+            // 
+            textBox1.Cursor = Cursors.IBeam;
+            textBox1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            textBox1.Location = new Point(21, 94);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(137, 33);
+            textBox1.TabIndex = 11;
+            // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label5.Location = new Point(21, 232);
+            label5.Location = new Point(21, 66);
             label5.Name = "label5";
             label5.Size = new Size(213, 25);
             label5.TabIndex = 10;
             label5.Text = "Количество вопросов:";
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.Location = new Point(240, 232);
-            label4.Name = "label4";
-            label4.Size = new Size(22, 25);
-            label4.TabIndex = 9;
-            label4.Text = "0";
-            // 
             // button3
             // 
             button3.Cursor = Cursors.Hand;
             button3.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            button3.Location = new Point(21, 271);
+            button3.Location = new Point(164, 94);
             button3.Name = "button3";
-            button3.Size = new Size(281, 35);
+            button3.Size = new Size(137, 35);
             button3.TabIndex = 8;
             button3.Text = "ДОБАВИТЬ ФАЙЛ ВОПРОСОВ";
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
-            // 
-            // listBox1
-            // 
-            listBox1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 25;
-            listBox1.Location = new Point(21, 81);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(281, 129);
-            listBox1.TabIndex = 6;
             // 
             // label3
             // 
@@ -206,6 +195,17 @@
             // openFileDialog1
             // 
             openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.Location = new Point(3, 406);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(69, 15);
+            linkLabel1.TabIndex = 12;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "куда жмать";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // Form1
             // 
@@ -235,11 +235,11 @@
         private Panel panel1;
         private Panel panel2;
         private Label label3;
-        private ListBox listBox1;
         private Button button3;
         private OpenFileDialog openFileDialog1;
-        private Label label4;
         private Label label5;
         private Button button4;
+        private TextBox textBox1;
+        private LinkLabel linkLabel1;
     }
 }

@@ -3,6 +3,7 @@ using Telegram.Bot.Args;
 using Microsoft.Data.SqlClient;
 using Telegram.Bot.Types;
 using System.Threading;
+using System.Diagnostics;
 
 namespace TestSQLBot
 {
@@ -16,11 +17,13 @@ namespace TestSQLBot
         private int collumCount = 0;
         private static string nc;
         public int create = 0;
+        private int collumStop = 0;
 
 
         public Form1()
         {
             InitializeComponent();
+            panel1.Visible = false;
             button2.Visible = false;
             openFileDialog1.Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
             button4.BackColor = Color.Red;
@@ -49,6 +52,14 @@ namespace TestSQLBot
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             collumCount = Convert.ToInt32(numericUpDown1.Value);
+            if (collumCount > collumStop)
+            {
+                MessageBox.Show("Значение переключателя вопросов больше, чем самих вопросов",
+                "Ошибка",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+                numericUpDown1.Value = collumStop;
+            }
         }
 
         private async void OnMassegeHandler(object? sender, MessageEventArgs e)
@@ -95,7 +106,7 @@ namespace TestSQLBot
                             }
 
                         }
-                        else if (collumCount <= 4)
+                        else if (collumCount <= collumStop)
                         {
                             string s = $"q{collumCount}";
                             string nextMessage = nextMsg.Text;
@@ -144,19 +155,32 @@ namespace TestSQLBot
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
-                return;
-            // получаем выбранный файл
-            string filename = openFileDialog1.FileName;
-            listBox1.Items.Clear();
-            using (System.IO.StreamReader sr = new System.IO.StreamReader(filename))
+            DialogResult result = MessageBox.Show(
+                $"Количество вопросов {textBox1.Text}?",
+                "Сообщение",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button1);
+
+            if (result == DialogResult.Yes)
             {
-                while (!sr.EndOfStream)
-                {
-                    listBox1.Items.Add(sr.ReadLine());
-                }
+                collumStop = Convert.ToInt32(textBox1.Text);
+                panel1.Visible = true;
             }
-            label4.Text = listBox1.Items.Count.ToString();
+
+            //if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+            //    return;
+            //// получаем выбранный файл
+            //string filename = openFileDialog1.FileName;
+            ////listBox1.Items.Clear();
+            //using (System.IO.StreamReader sr = new System.IO.StreamReader(filename))
+            //{
+            //    while (!sr.EndOfStream)
+            //    {
+            //        //listBox1.Items.Add(sr.ReadLine());
+            //    }
+            //}
+            //label4.Text = listBox1.Items.Count.ToString();
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
@@ -172,10 +196,15 @@ namespace TestSQLBot
                 MessageBox.Show("Автор идеи: Курбатов parzival_2077 Алексей \n" +
                                 "Альфа тестировщики: Катаев Иван, Светлова Ирина, Бойправ Вадим \n" +
                                 "Идейный душнила: Павлов Андрей\n" +
-                                "Технические консультанты: Шишкина Марина, Мартьянов Максим, Тимонов Алексей\n"+
+                                "Технические консультанты: Шишкина Марина, Мартьянов Максим, Тимонов Алексей\n" +
                                 "Год релиза - 2023", "Пасхалка", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 create = 0;
             }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(new ProcessStartInfo { FileName = "https://github.com/parzival-2077/TgSQLBotWinForrm", UseShellExecute = true });
         }
     }
 }
