@@ -14,45 +14,45 @@ namespace TestSQLBot
         private static TelegramBotClient client;
         private static string connectionString = "Server=(localdb)\\mssqllocaldb;Database=tgServer;Trusted_Connection=True;"; //БД
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
-        private int collumCount = 0;
+        private int collumCount = 0;//счетчик столбцов
         private static string nc;
-        public int create = 0;
-        private int collumStop = 0;
+        public int create = 0;//счетчик для пасхалки
+        private int collumStop = 0;//огранечитель столбиков 
 
 
         public Form1()
         {
             InitializeComponent();
-            panel1.Visible = false;
-            button2.Visible = false;
-            openFileDialog1.Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
-            button4.BackColor = Color.Red;
+            panel1.Visible = false;//откл панль "бот"
+            button2.Visible = false;//кнопка стоп 
+            //openFileDialog1.Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*"; //возможно понадобиться для загрузки вопросов но я так не думаю 
+            button4.BackColor = Color.Red;//кнопка онлайна
 
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) //кнопка старт 
         {
 
             button2.Visible = true;
             MessageBox.Show("Start bot");
             button4.BackColor = Color.LimeGreen;
-            client = new TelegramBotClient(Token);
-            client.StartReceiving();
-            client.OnMessage += OnMassegeHandler;
+            client = new TelegramBotClient(Token);//активируем токен 
+            client.StartReceiving();//стартуем 
+            client.OnMessage += OnMassegeHandler;//ловим сообщения 
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) //кнопка стоп
         {
             button2.Visible = false;
             MessageBox.Show("Stop bot");
             button4.BackColor = Color.Red;
-            client.StopReceiving();
+            client.StopReceiving();//стопаем бота
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)//перключатель вопросов
         {
-            collumCount = Convert.ToInt32(numericUpDown1.Value);
-            if (collumCount > collumStop)
+            collumCount = Convert.ToInt32(numericUpDown1.Value);//значение 
+            if (collumCount > collumStop)//проверка на дурака 
             {
                 MessageBox.Show("Значение переключателя вопросов больше, чем самих вопросов",
                 "Ошибка",
@@ -62,11 +62,11 @@ namespace TestSQLBot
             }
         }
 
-        private async void OnMassegeHandler(object? sender, MessageEventArgs e)
+        private async void OnMassegeHandler(object? sender, MessageEventArgs e) //вся магия по работе с сообщениями 
         {
             string commMessage = "";
-            var msg = e.Message;
-            collumCount = Convert.ToInt32(numericUpDown1.Value);
+            var msg = e.Message;//сообщенмие 
+            collumCount = Convert.ToInt32(numericUpDown1.Value);//какой вопрос 
 
             if (msg.Text != null) { }
 
@@ -89,7 +89,7 @@ namespace TestSQLBot
                     if (nextMsg.Text != null)
                     {
                         //Console.WriteLine($"Новое сообщение: {nextMsg.Text}");
-                        if (collumCount == 0)
+                        if (collumCount == 0)//записываем название команды в колонку NAME 
                         {
                             // если получено следующее сообщение, добавляем его в базу данных
                             commMessage = nextMsg.Text;
@@ -106,7 +106,7 @@ namespace TestSQLBot
                             }
 
                         }
-                        else if (collumCount <= collumStop)
+                        else if (collumCount <= collumStop) //сохранение ответов пользователя 
                         {
                             string s = $"q{collumCount}";
                             string nextMessage = nextMsg.Text;
@@ -126,7 +126,7 @@ namespace TestSQLBot
                 };
             }
 
-            else if (msg.Text == "/admin")
+            else if (msg.Text == "/admin")//админ доступ 
             {
                 string query = "SELECT * FROM Users"; // ваш SQL-запрос
 
@@ -153,7 +153,7 @@ namespace TestSQLBot
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)//ввод количества вопросов
         {
             DialogResult result = MessageBox.Show(
                 $"Количество вопросов {textBox1.Text}?",
@@ -188,7 +188,7 @@ namespace TestSQLBot
 
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)//пасхалка
         {
             create++;
             if (create == 3)
@@ -202,12 +202,12 @@ namespace TestSQLBot
             }
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)//ссылачка на гит 
         {
             System.Diagnostics.Process.Start(new ProcessStartInfo { FileName = "https://github.com/parzival-2077/TgSQLBotWinForrm", UseShellExecute = true });
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)//получение данных из таблицы узнать название команд 
         {
             listBox1.Items.Clear();
             string query = "SELECT * FROM Users"; // ваш SQL-запрос
