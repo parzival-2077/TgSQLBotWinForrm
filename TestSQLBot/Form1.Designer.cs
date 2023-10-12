@@ -45,6 +45,9 @@
             button3 = new Button();
             label3 = new Label();
             openFileDialog1 = new OpenFileDialog();
+            radioButton1 = new RadioButton();
+            radioButton2 = new RadioButton();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -140,6 +143,9 @@
             // 
             panel2.BackColor = Color.Silver;
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(label4);
+            panel2.Controls.Add(radioButton2);
+            panel2.Controls.Add(radioButton1);
             panel2.Controls.Add(button5);
             panel2.Controls.Add(listBox1);
             panel2.Controls.Add(linkLabel1);
@@ -157,7 +163,7 @@
             // 
             button5.AutoSize = true;
             button5.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            button5.Location = new Point(21, 336);
+            button5.Location = new Point(21, 360);
             button5.Name = "button5";
             button5.Size = new Size(280, 35);
             button5.TabIndex = 14;
@@ -170,7 +176,7 @@
             listBox1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             listBox1.FormattingEnabled = true;
             listBox1.ItemHeight = 25;
-            listBox1.Location = new Point(21, 166);
+            listBox1.Location = new Point(21, 190);
             listBox1.Name = "listBox1";
             listBox1.Size = new Size(280, 154);
             listBox1.TabIndex = 13;
@@ -233,6 +239,40 @@
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            radioButton1.Location = new Point(145, 141);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(71, 29);
+            radioButton1.TabIndex = 15;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "Авто";
+            radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            radioButton2.Location = new Point(222, 143);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(94, 29);
+            radioButton2.TabIndex = 16;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "Ручной";
+            radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Location = new Point(-1, 141);
+            label4.Name = "label4";
+            label4.Size = new Size(144, 25);
+            label4.TabIndex = 17;
+            label4.Text = "Режим работы:";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -271,5 +311,8 @@
         private LinkLabel linkLabel1;
         private Button button5;
         private ListBox listBox1;
+        private Label label4;
+        private RadioButton radioButton2;
+        private RadioButton radioButton1;
     }
 }
