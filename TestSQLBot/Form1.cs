@@ -15,9 +15,12 @@ namespace TestSQLBot
         private static string connectionString = "Server=(localdb)\\mssqllocaldb;Database=tgServer;Trusted_Connection=True;"; //БД
         SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
         private int collumCount = 0;//счетчик столбцов
+        private int collumCount1 = 0;//счетчик столбцов
         private static string nc;
         public int create = 0;//счетчик для пасхалки
         private int collumStop = 0;//огранечитель столбиков 
+        public bool mood = false;
+
 
 
         public Form1()
@@ -60,12 +63,16 @@ namespace TestSQLBot
                 MessageBoxIcon.Error);
                 numericUpDown1.Value = collumStop;
             }
+
+
         }
 
         private async void OnMassegeHandler(object? sender, MessageEventArgs e) //вся магия по работе с сообщениями 
         {
+
             string commMessage = "";
             var msg = e.Message;//сообщенмие 
+
             collumCount = Convert.ToInt32(numericUpDown1.Value);//какой вопрос 
 
             if (msg.Text != null) { }
@@ -151,9 +158,10 @@ namespace TestSQLBot
                     }
                 }
             }
-        }
 
-        private void button3_Click(object sender, EventArgs e)//ввод количества вопросов
+
+        }
+        private async void button3_Click(object sender, EventArgs e)//ввод количества вопросов
         {
             DialogResult result = MessageBox.Show(
                 $"Количество вопросов {textBox1.Text}?",
@@ -166,7 +174,25 @@ namespace TestSQLBot
             {
                 collumStop = Convert.ToInt32(textBox1.Text);
                 panel1.Visible = true;
+
             }
+            string sqlExpression = "TRUNCATE TABLE Users";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                await connection.OpenAsync();
+                // добавление
+                SqlCommand command = new SqlCommand(sqlExpression, connection);
+                int number = await command.ExecuteNonQueryAsync();
+            }
+
+            //MessageBox.Show(
+            //    "Укажите режим работы",
+            //    "Ошибка",
+            //    MessageBoxButtons.OK,
+            //    MessageBoxIcon.Stop,
+            //    MessageBoxDefaultButton.Button1
+            //);
 
             //if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
             //    return;
@@ -230,6 +256,16 @@ namespace TestSQLBot
                     }
                 }
             }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            mood = true;
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            mood = false;
         }
     }
 }
