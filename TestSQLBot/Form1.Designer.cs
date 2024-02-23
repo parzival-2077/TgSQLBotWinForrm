@@ -37,13 +37,13 @@
             panel1 = new Panel();
             button4 = new Button();
             panel2 = new Panel();
+            button6 = new Button();
             label4 = new Label();
             radioButton2 = new RadioButton();
             radioButton1 = new RadioButton();
             button5 = new Button();
             listBox1 = new ListBox();
             linkLabel1 = new LinkLabel();
-            textBox1 = new TextBox();
             label5 = new Label();
             button3 = new Button();
             label3 = new Label();
@@ -126,13 +126,13 @@
             panel1.Controls.Add(numericUpDown1);
             panel1.Location = new Point(8, 12);
             panel1.Name = "panel1";
-            panel1.Size = new Size(321, 426);
+            panel1.Size = new Size(321, 457);
             panel1.TabIndex = 5;
             // 
             // button4
             // 
             button4.BackColor = Color.LimeGreen;
-            button4.Location = new Point(3, 396);
+            button4.Location = new Point(3, 427);
             button4.Name = "button4";
             button4.Size = new Size(25, 25);
             button4.TabIndex = 5;
@@ -143,21 +143,68 @@
             // 
             panel2.BackColor = Color.Silver;
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(button6);
             panel2.Controls.Add(label4);
             panel2.Controls.Add(radioButton2);
             panel2.Controls.Add(radioButton1);
             panel2.Controls.Add(button5);
             panel2.Controls.Add(listBox1);
             panel2.Controls.Add(linkLabel1);
-            panel2.Controls.Add(textBox1);
             panel2.Controls.Add(label5);
             panel2.Controls.Add(button3);
             panel2.Controls.Add(label3);
             panel2.Location = new Point(381, 12);
             panel2.Name = "panel2";
-            panel2.Size = new Size(321, 426);
+            panel2.Size = new Size(321, 457);
             panel2.TabIndex = 6;
             panel2.Paint += panel2_Paint;
+            // 
+            // button6
+            // 
+            button6.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            button6.Location = new Point(21, 399);
+            button6.Name = "button6";
+            button6.Size = new Size(280, 35);
+            button6.TabIndex = 18;
+            button6.Text = "ЭКСПОРТ В EXCEL";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            label4.Location = new Point(-1, 141);
+            label4.Name = "label4";
+            label4.Size = new Size(144, 25);
+            label4.TabIndex = 17;
+            label4.Text = "Режим работы:";
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            radioButton2.Location = new Point(222, 141);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(94, 29);
+            radioButton2.TabIndex = 16;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "Ручной";
+            radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.CheckedChanged += radioButton2_CheckedChanged;
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            radioButton1.Location = new Point(145, 141);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(71, 29);
+            radioButton1.TabIndex = 15;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "Авто";
+            radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
             // 
             // button5
             // 
@@ -184,7 +231,7 @@
             // linkLabel1
             // 
             linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(3, 406);
+            linkLabel1.Location = new Point(3, 437);
             linkLabel1.Name = "linkLabel1";
             linkLabel1.Size = new Size(69, 15);
             linkLabel1.TabIndex = 12;
@@ -192,34 +239,25 @@
             linkLabel1.Text = "куда жмать";
             linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
-            // textBox1
-            // 
-            textBox1.Cursor = Cursors.IBeam;
-            textBox1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.Location = new Point(21, 94);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(137, 33);
-            textBox1.TabIndex = 11;
-            // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
             label5.Location = new Point(21, 66);
             label5.Name = "label5";
-            label5.Size = new Size(213, 25);
+            label5.Size = new Size(161, 25);
             label5.TabIndex = 10;
-            label5.Text = "Количество вопросов:";
+            label5.Text = "Создать таблицу";
             // 
             // button3
             // 
             button3.Cursor = Cursors.Hand;
             button3.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
-            button3.Location = new Point(164, 94);
+            button3.Location = new Point(21, 94);
             button3.Name = "button3";
-            button3.Size = new Size(137, 35);
+            button3.Size = new Size(280, 35);
             button3.TabIndex = 8;
-            button3.Text = "ДОБАВИТЬ ФАЙЛ ВОПРОСОВ";
+            button3.Text = "СОЗДАТЬ ";
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
@@ -243,14 +281,13 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(714, 450);
+            ClientSize = new Size(714, 481);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MaximumSize = new Size(730, 489);
             MinimumSize = new Size(730, 489);
             Name = "Form1";
-            Text = "Telegram Bot [v0.5,4 beta]";
+            Text = "Telegram Bot [v0.6.0 beta]";
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -273,12 +310,12 @@
         private OpenFileDialog openFileDialog1;
         private Label label5;
         private Button button4;
-        private TextBox textBox1;
         private LinkLabel linkLabel1;
         private Button button5;
         private ListBox listBox1;
         private Label label4;
         private RadioButton radioButton2;
         private RadioButton radioButton1;
+        private Button button6;
     }
 }

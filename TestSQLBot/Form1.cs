@@ -4,6 +4,8 @@ using Microsoft.Data.SqlClient;
 using Telegram.Bot.Types;
 using System.Threading;
 using System.Diagnostics;
+using Microsoft.Office.Interop.Excel;
+using System.Data;
 
 namespace TestSQLBot
 {
@@ -20,6 +22,12 @@ namespace TestSQLBot
         public int create = 0;//счетчик для пасхалки
         private int collumStop = 0;//огранечитель столбиков 
         public bool mood = false;
+        private Form2 F2 = new Form2();
+        string tableName;
+
+        Microsoft.Office.Interop.Excel.Application xlApp;
+        Microsoft.Office.Interop.Excel.Worksheet xlSheet;
+        Microsoft.Office.Interop.Excel.Range xlSheetRange;
 
 
 
@@ -100,7 +108,7 @@ namespace TestSQLBot
                         {
                             // если получено следующее сообщение, добавляем его в базу данных
                             commMessage = nextMsg.Text;
-                            string sqlExpression = $"INSERT INTO Users (Name,q1,q2,q3,q4) VALUES (N'{commMessage}','0','0','0','0')";
+                            string sqlExpression = $"INSERT INTO {tableName} (Name,q1,q2,q3,q4) VALUES (N'{commMessage}','0','0','0','0')";
                             using (SqlConnection connection = new SqlConnection(connectionString))
                             {
                                 await connection.OpenAsync();
@@ -118,7 +126,7 @@ namespace TestSQLBot
                             string s = $"q{collumCount}";
                             string nextMessage = nextMsg.Text;
                             msg = await client.SendTextMessageAsync(msg.Chat.Id, "OK");
-                            string sqlExpression = $"UPDATE  Users SET {s} = N'{nextMessage}' WHERE Name = N'{commMessage}'";
+                            string sqlExpression = $"UPDATE  {tableName} SET {s} = N'{nextMessage}' WHERE Name = N'{commMessage}'";
                             using (SqlConnection connection = new SqlConnection(connectionString))
                             {
                                 await connection.OpenAsync();
@@ -135,7 +143,7 @@ namespace TestSQLBot
 
             else if (msg.Text == "/admin")//админ доступ 
             {
-                string query = "SELECT * FROM Users"; // ваш SQL-запрос
+                string query = $"SELECT * FROM {tableName}"; // ваш SQL-запрос
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -163,7 +171,12 @@ namespace TestSQLBot
         }
         private async void button3_Click(object sender, EventArgs e)//ввод количества вопросов
         {
-            DialogResult result = MessageBox.Show(
+            F2.ShowDialog();
+            tableName = F2.textBoxValue;
+            collumStop = F2.numberUpDownValue;
+            panel1.Visible = true;
+
+            /*DialogResult result = MessageBox.Show(
                 $"Количество вопросов {textBox1.Text}?",
                 "Сообщение",
                 MessageBoxButtons.YesNo,
@@ -184,7 +197,7 @@ namespace TestSQLBot
                 // добавление
                 SqlCommand command = new SqlCommand(sqlExpression, connection);
                 int number = await command.ExecuteNonQueryAsync();
-            }
+            }*/
 
             //MessageBox.Show(
             //    "Укажите режим работы",
@@ -266,6 +279,128 @@ namespace TestSQLBot
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             mood = false;
+        }
+        private System.Data.DataTable GetData()
+        {
+            //строка соединения
+
+
+            SqlConnection con = new SqlConnection(connectionString);
+
+            System.Data.DataTable dt = new System.Data.DataTable();
+            try
+            {
+                string query = $"SELECT * FROM {tableName}";
+                SqlCommand comm = new SqlCommand(query, con);
+
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                dt = ds.Tables[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                con.Close();
+                con.Dispose();
+            }
+            return dt;
+        }
+        private void button6_Click(object sender, EventArgs e)
+        {
+            xlApp = new Microsoft.Office.Interop.Excel.Application();
+
+            try
+            {
+                //добавляем книгу
+                xlApp.Workbooks.Add(Type.Missing);
+
+                //делаем временно неактивным документ
+                xlApp.Interactive = false;
+                xlApp.EnableEvents = false;
+
+                //выбираем лист на котором будем работать (Лист 1)
+                xlSheet = (Microsoft.Office.Interop.Excel.Worksheet)xlApp.Sheets[1];
+                //Название листа
+                xlSheet.Name = "Данные";
+
+                //Выгрузка данных
+                System.Data.DataTable dt = GetData();
+
+                int collInd = 0;
+                int rowInd = 0;
+                string data = "";
+
+                //называем колонки
+                for (int i = 0; i < dt.Columns.Count; i++)
+                {
+                    data = dt.Columns[i].ColumnName.ToString();
+                    xlSheet.Cells[1, i + 1] = data;
+
+                    //выделяем первую строку
+                    xlSheetRange = xlSheet.get_Range("A1:Z1", Type.Missing);
+
+                    //делаем полужирный текст и перенос слов
+                    xlSheetRange.WrapText = true;
+                    xlSheetRange.Font.Bold = true;
+                }
+
+                //заполняем строки
+                for (rowInd = 0; rowInd < dt.Rows.Count; rowInd++)
+                {
+                    for (collInd = 0; collInd < dt.Columns.Count; collInd++)
+                    {
+                        data = dt.Rows[rowInd].ItemArray[collInd].ToString();
+                        xlSheet.Cells[rowInd + 2, collInd + 1] = data;
+                    }
+                }
+
+                //выбираем всю область данных
+                xlSheetRange = xlSheet.UsedRange;
+
+                //выравниваем строки и колонки по их содержимому
+                xlSheetRange.Columns.AutoFit();
+                xlSheetRange.Rows.AutoFit();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                //Показываем ексель
+                xlApp.Visible = true;
+
+                xlApp.Interactive = true;
+                xlApp.ScreenUpdating = true;
+                xlApp.UserControl = true;
+
+                //Отсоединяемся от Excel
+                releaseObject(xlSheetRange);
+                releaseObject(xlSheet);
+                releaseObject(xlApp);
+            }
+        }
+        void releaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                MessageBox.Show(ex.ToString(), "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            finally
+            {
+                GC.Collect();
+            }
         }
     }
 }
